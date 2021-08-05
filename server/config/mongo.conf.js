@@ -5,7 +5,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
-export default (mongoose) => {
+module.exports = (mongoose) => {
   function gracefulExit() {
     db.close(() => {
       console.log(
