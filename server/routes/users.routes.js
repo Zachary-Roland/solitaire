@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require("../models/users.models");
 
@@ -25,6 +26,8 @@ router.post("/login", async (req, res) => {
             highscore: user.highscore,
           },
         };
+      } else {
+        json = { ...json, error: "INVALID USERNAME OR PASSWORD" };
       }
     } else {
       json = { ...json, error: "Invalid username or password" };
@@ -47,7 +50,12 @@ router.post("/signup", async (req, res) => {
       console.log(user);
       if (!user) {
         if (validate(username, password)) {
-          let hashed = await User.generateHash(password);
+          let hashed = await bcrypt.hashSync(
+            password,
+            bcrypt.genSaltSync(),
+            null
+          );
+          //   User.generateHash(password);
           let user = await User.create({ username, password: hashed, email });
           await user.save();
           json = { ...json, success: true, data: "Account Created!" };
