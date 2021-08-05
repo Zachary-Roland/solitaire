@@ -2,16 +2,15 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 let userSchema = mongoose.Schema({
-  local: {
-    username: { type: String, unique: true },
-    password: String,
-    email: { type: String, unique: true },
-    highscore: { type: Number, default: 0 },
-  },
+  username: { type: String, unique: true },
+  password: String,
+  email: { type: String, unique: true },
+  highscore: { type: Number, default: 0 },
   jwthash: { type: String },
 });
 
 // Example functions from class notes
+// TODO not currently able to pull this function in users.routes so copying functionality. Find Fix.
 userSchema.methods.generateHash = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(), null);
 };
