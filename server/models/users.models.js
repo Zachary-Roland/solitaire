@@ -1,22 +1,24 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 let userSchema = mongoose.Schema({
   local: {
     username: { type: String, unique: true },
     password: String,
     email: { type: String, unique: true },
-    highscore: Number,
+    highscore: { type: Number, default: 0 },
   },
   jwthash: { type: String },
 });
 
+// Example functions from class notes
 userSchema.methods.generateHash = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(), null);
 };
 
-userSchema.methods.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.local.password);
+userSchema.methods.validPassword = async function (password) {
+  let compare = await bcrypt.compareSync(password, this.local.password);
+  return compare;
 };
 
 userSchema.methods.sanitize = function () {
@@ -28,23 +30,4 @@ userSchema.methods.sanitize = function () {
   };
 };
 
-export default mongoose.model("User", userSchema);
-
-// password Hasher anytime password is changed
-// userSchema.pre('save', function(next){
-//     if(!this.isModified('local.password')){
-//       return next();
-//     }
-//       this.local.password = this.generateHash(this.local.password);
-//       this.jwthash = crypto.randomBytes(20).toString('hex');
-//     return next();
-//   });
-
-// const userInfoSchema = new Schema({
-//   username: String,
-//   password: String,
-//   email: String,
-//   highscore: Number,
-// });
-
-// const userInfo = mongoose.model("userInfo", userInfoSchema);
+module.exports = mongoose.model("User", userSchema);
