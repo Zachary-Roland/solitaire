@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 const User = require("../models/users.models");
 const passport = require("passport");
+const auth = require("../middleware/auth.middleware");
 
 router.get("/validate", auth, (req, res) => {
   return res.send({
