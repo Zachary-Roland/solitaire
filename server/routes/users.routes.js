@@ -64,6 +64,11 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  return res.send({ success: true, error: null, body: null });
+});
+
 // ! validate function checks if meets length requirements
 function validate(username, password) {
   return (
