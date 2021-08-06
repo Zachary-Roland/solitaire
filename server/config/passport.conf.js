@@ -9,7 +9,7 @@ module.exports = function configPassport(passport) {
     "local-login",
     new LocalStrategy(async (username, password, done) => {
       let json = { success: false, data: null, error: null };
-      const { username, password } = req.body;
+      //   const { username, password } = req.body;
       console.log(username, password);
       //   login function starts here
       try {
@@ -37,13 +37,17 @@ module.exports = function configPassport(passport) {
       } finally {
         console.log(json);
         // return json;
-        if (error) {
-          return done(error);
+        if (json.error) {
+          return done(json.error);
         }
-        const token = jwt.sign({ uuid: data.uuid }, process.env.SECRET_KEY, {
-          expiresIn: "10 minutes",
-        });
-        return done(null, { username: data.username }, { token });
+        const token = jwt.sign(
+          { uuid: json.data.uuid },
+          process.env.SECRET_KEY,
+          {
+            expiresIn: "10 minutes",
+          }
+        );
+        return done(null, { username: json.data.username }, { token });
       }
       //   login function ends here
     })
