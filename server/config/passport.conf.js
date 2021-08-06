@@ -47,7 +47,17 @@ module.exports = function configPassport(passport) {
             expiresIn: "10 minutes",
           }
         );
-        return done(null, { username: json.data.username }, { token });
+        console.log(token);
+        return done(
+          null,
+          {
+            username: json.data.username,
+            email: json.data.email,
+            highscore: json.data.highscore,
+            uuid: json.data.uuid,
+          },
+          { token }
+        );
       }
       //   login function ends here
     })
@@ -55,6 +65,7 @@ module.exports = function configPassport(passport) {
 
   const cookieJWTExtractor = (req) => {
     let token = null;
+    console.log(req.cookies);
     if (req && req.cookies) {
       token = req.cookies["jwt"];
     }
@@ -69,14 +80,15 @@ module.exports = function configPassport(passport) {
   passport.use(
     "jwt",
     new Strategy(jwtOptions, async (payload, done) => {
+      console.log(`the payload is: ${payload}`);
       if (!payload || !payload.uuid) {
         return done(true, false, "INVALID CREDENTIALS");
       }
-      const { data, error } = await User.findOne(payload.uuid);
+      const { error } = await User.findOne({ uuid: payload.uuid });
       if (error) {
         return done(true, false, "invalid credentials");
       }
-      return done(false, data, null);
+      return done(false, true, null);
     })
   );
 
