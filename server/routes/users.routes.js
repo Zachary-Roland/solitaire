@@ -5,6 +5,14 @@ const router = express.Router();
 const User = require("../models/users.models");
 const passport = require("passport");
 
+router.get("/validate", auth, (req, res) => {
+  return res.send({
+    success: true,
+    error: null,
+    data: { username: req.user.username },
+  });
+});
+
 router.post("/login", async (req, res) => {
   //! passport local-login goes here
   passport.authenticate("local-login", (err, user, info) => {
