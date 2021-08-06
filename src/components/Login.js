@@ -13,6 +13,7 @@ const Login = () => {
   const history = useHistory();
   return (
     <>
+      <h1>Login</h1>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
@@ -66,7 +67,7 @@ const Login = () => {
             }
           }}
         >
-          Submit
+          Login
         </Button>
         <Button
           type="button"

@@ -7,6 +7,7 @@ const passport = require("passport");
 const auth = require("../middleware/auth.middleware");
 
 router.get("/validate", auth, (req, res) => {
+  // console.log(req);
   return res.send({
     success: true,
     error: null,

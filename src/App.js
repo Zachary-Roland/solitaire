@@ -23,12 +23,10 @@ import useFetch from "./hooks/useFetch";
 // imports components from react-bootstrap
 import Navbar from "react-bootstrap/Navbar";
 import { Nav } from "react-bootstrap";
-// imports components from react-router-bootstrap
-import { LinkContainer } from "react-router-bootstrap";
 
 function App() {
   const { username, logout } = useContext(UserContext);
-
+  const { callAPI: validateCall } = useFetch("GET");
   return (
     <Router>
       <nav>

@@ -10,7 +10,6 @@ module.exports = function configPassport(passport) {
     new LocalStrategy(async (username, password, done) => {
       let json = { success: false, data: null, error: null };
       //   const { username, password } = req.body;
-      console.log(username, password);
       //   login function starts here
       try {
         if (validate(username, password)) {
@@ -47,7 +46,6 @@ module.exports = function configPassport(passport) {
             expiresIn: "10 minutes",
           }
         );
-        console.log(token);
         return done(
           null,
           {
@@ -80,15 +78,16 @@ module.exports = function configPassport(passport) {
   passport.use(
     "jwt",
     new Strategy(jwtOptions, async (payload, done) => {
-      console.log(`the payload is: ${payload}`);
+      console.log(`payload.uuid: ${payload.uuid}`);
       if (!payload || !payload.uuid) {
         return done(true, false, "INVALID CREDENTIALS");
       }
-      const { error } = await User.findOne({ uuid: payload.uuid });
-      if (error) {
+      const user = await User.findOne({ uuid: payload.uuid });
+      console.log(`user is: ${user}`);
+      if (err) {
         return done(true, false, "invalid credentials");
       }
-      return done(false, true, null);
+      return done(false, user, null);
     })
   );
 

@@ -19,6 +19,7 @@ export function UserProvider(props) {
   useEffect(() => {
     async function valid() {
       const res = await validate("/api/users/validate");
+      console.log(res);
       if (res.success) {
         login(res.data.username);
       }
