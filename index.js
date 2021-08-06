@@ -13,7 +13,7 @@ configPassport(passport);
 
 app.use(express.json());
 app.use(express.static(__dirname + "/build"));
-app.use(passport.initialize);
+app.use(passport.initialize());
 
 app.use("/api/users", userRoutes);
 
