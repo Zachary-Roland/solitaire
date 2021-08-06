@@ -32,33 +32,40 @@ function App() {
   return (
     <Router>
       <nav>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" expand="lg">
           <Navbar.Brand>Solitaire</Navbar.Brand>
-          <Nav>
-            {!username && (
-              <>
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-                <Link className="nav-link" to="/signup">
-                  Signup
-                </Link>
-              </>
-            )}
-            {username && (
-              <>
-                <Link className="nav-link" to="/game">
-                  Game
-                </Link>
-                <Link className="nav-link" to="/about">
-                  About
-                </Link>
-                <Link className="nav-link" to="/login" onClick={() => logout()}>
-                  Logout
-                </Link>
-              </>
-            )}
-          </Nav>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav>
+              {!username && (
+                <>
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                  <Link className="nav-link" to="/signup">
+                    Signup
+                  </Link>
+                </>
+              )}
+              {username && (
+                <>
+                  <Link className="nav-link" to="/game">
+                    Game
+                  </Link>
+                  <Link className="nav-link" to="/about">
+                    About
+                  </Link>
+                  <Link
+                    className="nav-link"
+                    to="/login"
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </Link>
+                </>
+              )}
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
       </nav>
       <main>
