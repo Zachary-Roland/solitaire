@@ -1,43 +1,20 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 const User = require("../models/users.models");
-
-// routes I want
-
-// find user by username
-
-// create user
+const passport = require("passport");
 
 router.post("/login", async (req, res) => {
-  let json = { success: false, data: null, error: null };
-  const { username, password } = req.body;
-  console.log(username, password);
-  try {
-    if (validate(username, password)) {
-      let user = await User.findOne({ username });
-      if (user && user.validPassword(password)) {
-        json = {
-          ...json,
-          success: true,
-          data: {
-            username: user.username,
-            email: user.email,
-            highscore: user.highscore,
-          },
-        };
-      } else {
-        json = { ...json, error: "INVALID USERNAME OR PASSWORD" };
-      }
-    } else {
-      json = { ...json, error: "Invalid username or password" };
+  //! passport local-login goes here
+  passport.authenticate("local-login", (err, user, info) => {
+    if (err) {
+      return res.send({ success: false, error: err, data: null });
     }
-  } catch (err) {
-    json = { ...json, error: "Something went wrong?" };
-  } finally {
-    console.log(json);
-    return res.send(json);
-  }
+    return res
+      .cookie("jwt", info.token, { secure: true, httpOnly: true })
+      .send({ success: true, error: null, data: user });
+  })(req, res);
 });
 
 router.post("/signup", async (req, res) => {
@@ -55,8 +32,14 @@ router.post("/signup", async (req, res) => {
             bcrypt.genSaltSync(),
             null
           );
+          const uuid = uuidv4();
           //   User.generateHash(password);
-          let user = await User.create({ username, password: hashed, email });
+          let user = await User.create({
+            username,
+            password: hashed,
+            email,
+            uuid,
+          });
           await user.save();
           json = { ...json, success: true, data: "Account Created!" };
         }
