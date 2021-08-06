@@ -16,10 +16,11 @@ let userSchema = mongoose.Schema({
 //   return bcrypt.hashSync(password, bcrypt.genSaltSync(), null);
 // };
 
-// userSchema.methods.validPassword = async function (password) {
-//   let compare = await bcrypt.compareSync(password, this.local.password);
-//   return compare;
-// };
+userSchema.methods.validPassword = async function (password) {
+  console.log(password, this.password);
+  let compare = await bcrypt.compareSync(password, this.password);
+  return compare;
+};
 
 // userSchema.methods.sanitize = function () {
 //   return {
