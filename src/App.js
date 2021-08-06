@@ -1,5 +1,7 @@
 // imports CSS
 import "./App.css";
+// imports React
+import React, { useContext } from "react";
 // imports components
 import AboutPage from "./components/AboutPage";
 import Login from "./components/Login";
@@ -12,46 +14,73 @@ import {
   Redirect,
   Route,
   Switch,
+  Link,
 } from "react-router-dom";
+// imports context
+import { UserContext } from "./context/UserContext";
+// imports useFetch
+import useFetch from "./hooks/useFetch";
+// imports components from react-bootstrap
+import Navbar from "react-bootstrap/Navbar";
+import { Nav } from "react-bootstrap";
+// imports components from react-router-bootstrap
+import { LinkContainer } from "react-router-bootstrap";
 
 function App() {
+  const { username, logout } = useContext(UserContext);
+
   return (
     <Router>
       <nav>
-        {!username && (
-          <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/signup">Signup</NavLink>
-          </>
-        )}
-        {username && (
-          <>
-            <NavLink to="/game">Game</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink
-              to="/login"
-              // onClick-{() => logout()}
-            >
-              Logout
-            </NavLink>
-          </>
-        )}
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand>Solitaire</Navbar.Brand>
+          <Nav>
+            {!username && (
+              <>
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+                <Link className="nav-link" to="/signup">
+                  Signup
+                </Link>
+              </>
+            )}
+            {username && (
+              <>
+                <Link className="nav-link" to="/game">
+                  Game
+                </Link>
+                <Link className="nav-link" to="/about">
+                  About
+                </Link>
+                <Link className="nav-link" to="/login" onClick={() => logout()}>
+                  Logout
+                </Link>
+              </>
+            )}
+          </Nav>
+        </Navbar>
       </nav>
       <main>
-        <div className="App">
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/about">
-            <AboutPage />
-          </Route>
-          <Route path="/game">
-            <SolitairePage />
-          </Route>
-        </div>
+        <Switch>
+          <div className="App">
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/game">
+              <SolitairePage />
+            </Route>
+            <Route path="*">
+              <Redirect to="/login" />
+            </Route>
+          </div>
+        </Switch>
       </main>
     </Router>
   );
