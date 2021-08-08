@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { SolitaireContext } from "../context/SolitaireContext";
 
 const Tableau = () => {
-  const { deck, setDeck, tableau, setTableau } = useContext(UserContext);
+  const { deck, setDeck, tableau, setTableau } = useContext(SolitaireContext);
   return (
     <>
       <Row>
