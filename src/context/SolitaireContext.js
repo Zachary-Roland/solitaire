@@ -5,6 +5,12 @@ export const SolitaireContext = createContext(null);
 export function SolitaireProvider(props) {
   const [deck, setDeck] = useState([]);
   const [tableau, setTableau] = useState([[], [], [], [], [], [], []]);
+  const [hand, setHand] = useState([]);
+  const [waste, setWaste] = useState([]);
+  const [heartFound, setHeartFound] = useState([]);
+  const [diamondFound, setDiamondFound] = useState([]);
+  const [clubFound, setClubFound] = useState([]);
+  const [spadeFound, setSpadeFound] = useState([]);
   const suit = ["spades", "hearts", "diamonds", "clubs"];
   const face = [
     "ace",
@@ -92,9 +98,33 @@ export function SolitaireProvider(props) {
     }
     setDeck(newDeck);
     setTableau(newTab);
+    // TODO create the hand or stock pile that the player draws from.
+    setHand(deck);
+    // TODO create the waste pile that the player draws and cannot use (this will show playable card for us)
+    // will be empty at game start
+    // TODO create the foundation piles (they will be empty at game start)
   }, []);
   return (
-    <SolitaireContext.Provider value={{ deck, setDeck, tableau, setTableau }}>
+    <SolitaireContext.Provider
+      value={{
+        deck,
+        setDeck,
+        tableau,
+        setTableau,
+        hand,
+        setHand,
+        waste,
+        setWaste,
+        heartFound,
+        setHeartFound,
+        diamondFound,
+        setDiamondFound,
+        clubFound,
+        setClubFound,
+        spadeFound,
+        setSpadeFound,
+      }}
+    >
       {props.children}
     </SolitaireContext.Provider>
   );
