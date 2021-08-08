@@ -6,10 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext";
+import { SolitaireProvider } from "./context/SolitaireContext";
 
 ReactDOM.render(
   <UserProvider>
-    <App />
+    <SolitaireProvider>
+      <App />
+    </SolitaireProvider>
   </UserProvider>,
   document.getElementById("root")
 );
