@@ -8,6 +8,11 @@ const SolitairePage = () => {
   return (
     <>
       <Container>
+        <Row>
+          <Col>
+            <h1>Play Solitaire!</h1>
+          </Col>
+        </Row>
         <Tableau />
       </Container>
     </>
