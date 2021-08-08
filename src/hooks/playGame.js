@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-// import playGame from "../hooks/playGame";
-
-const SolitairePage = () => {
-  // playGame();
-  const [tableau, setTableau] = useState([[], [], [], [], [], [], []]);
+export default function playGame() {
   const suit = ["spades", "hearts", "diamonds", "clubs"];
   const face = [
     "ace",
@@ -20,7 +15,8 @@ const SolitairePage = () => {
     "queen",
     "king",
   ];
-  let deck = [];
+  let deck = new Array();
+  // function to create full deck of cards (no jokers)
   suit.forEach((i) => {
     face.forEach((j) => {
       let card = { face: j, suit: i, value: null, isFaceUp: false };
@@ -39,6 +35,7 @@ const SolitairePage = () => {
       deck.push(card);
     });
   });
+  // shuffle the deck before dealing
   function shuffle(array) {
     let m = array.length,
       t,
@@ -52,7 +49,10 @@ const SolitairePage = () => {
     return array;
   }
   shuffle(deck);
-  function dealTab() {
+  // deal cards
+  // tableau has 7 piles of cards. So 7 arrays of cards
+  const tableau = [[], [], [], [], [], [], []];
+  function deal() {
     for (let i = 0; i < 7; i++) {
       // dealing one card from left to right, first card dealt is face up.
       // then start from the next pile over from the left, firs card is face up rest are face down.4
@@ -68,27 +68,6 @@ const SolitairePage = () => {
       }
     }
   }
-  dealTab();
-  console.log(tableau);
-  return (
-    <>
-      <h1>Play Solitaire!</h1>
-      {tableau.map((arr) => {
-        return (
-          <>
-            <h4>{`Pile has ${arr.length} cards`}</h4>
-            {arr.map((obj) => {
-              if (obj.isFaceUp) {
-                return <h6>{`${obj.face} of ${obj.suit}`}</h6>;
-              } else {
-                return <h6>Card</h6>;
-              }
-            })}
-          </>
-        );
-      })}
-    </>
-  );
-};
-
-export default SolitairePage;
+  deal();
+  return { deck };
+}
