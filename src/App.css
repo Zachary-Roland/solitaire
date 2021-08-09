@@ -40,3 +40,10 @@
   width: 100px;
   height: 100px;
 }
+.pilePlace {
+  background-color: lightgray;
+  border-radius: 10px;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
