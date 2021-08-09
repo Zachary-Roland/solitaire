@@ -41,25 +41,6 @@ export function SolitaireProvider(props) {
     return array;
   }
 
-  //   function dealTab() {
-  //     let newTab = [[], [], [], [], [], [], []];
-  //     for (let i = 0; i < 7; i++) {
-  //       // dealing one card from left to right, first card dealt is face up.
-  //       // then start from the next pile over from the left, firs card is face up rest are face down.4
-  //       let startingPile = newTab[i];
-  //       let faceCardToAdd = newDeck.pop();
-  //       faceCardToAdd.isFaceUp = true;
-  //       startingPile.push(faceCardToAdd);
-  //       for (let j = i + 1; j < 7; j++) {
-  //         // after first card, all cards are facedown.
-  //         let pileToAdd = newTab[j];
-  //         let cardToAdd = newDeck.pop();
-  //         pileToAdd.push(cardToAdd);
-  //       }
-  //     }
-  //     setTableau(newTab);
-  //   }
-
   useEffect(() => {
     let newDeck = [];
     suit.forEach((i) => {
@@ -96,10 +77,10 @@ export function SolitaireProvider(props) {
         pileToAdd.push(cardToAdd);
       }
     }
-    setDeck(newDeck);
+    // setDeck(newDeck);
     setTableau(newTab);
     // TODO create the hand or stock pile that the player draws from.
-    setHand(deck);
+    setHand(newDeck);
     // TODO create the waste pile that the player draws and cannot use (this will show playable card for us)
     // will be empty at game start
     // TODO create the foundation piles (they will be empty at game start)

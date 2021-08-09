@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { SolitaireContext } from "../context/SolitaireContext";
 
 const Tableau = () => {
