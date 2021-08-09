@@ -1,9 +1,19 @@
 import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import { SolitaireContext } from "../context/SolitaireContext";
+import { useDrag } from "react-dnd";
 
 const Tableau = () => {
   const { deck, setDeck, tableau, setTableau } = useContext(SolitaireContext);
+  const ItemTypes = {
+    CARD: "card",
+  };
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CARD,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
   return (
     <>
       <Row>
@@ -20,6 +30,11 @@ const Tableau = () => {
                             className="cardImg"
                             src={`./cardicons/${obj.suit}${obj.face}.png`}
                             alt={`${obj.face} of ${obj.suit}`}
+                            ref={drag}
+                            style={{
+                              opacity: isDragging ? 0.5 : 1,
+                              cursor: "move",
+                            }}
                           />
                         </div>
                       </Col>
