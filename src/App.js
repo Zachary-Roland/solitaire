@@ -1,7 +1,7 @@
 // imports CSS
 import "./App.css";
 // imports React
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 // imports components
 import AboutPage from "./components/AboutPage";
 import Login from "./components/Login";
@@ -26,7 +26,7 @@ import { Nav } from "react-bootstrap";
 
 function App() {
   const { username, logout } = useContext(UserContext);
-  const { callAPI: validateCall } = useFetch("GET");
+
   return (
     <Router>
       <nav>
@@ -82,7 +82,7 @@ function App() {
               <SolitairePage />
             </Route>
             <Route path="*">
-              <Redirect to="/login" />
+              <Redirect to="/game" />
             </Route>
           </div>
         </Switch>
