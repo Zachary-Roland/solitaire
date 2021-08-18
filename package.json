@@ -31,7 +31,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "front": "react-scripts start",
     "back": "nodemon index",
     "build": "react-scripts build",
     "test": "react-scripts test",
