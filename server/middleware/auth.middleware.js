@@ -11,6 +11,7 @@ async function auth(req, res, next) {
       });
     }
     req.user = user;
+    console.log("req.user:", req.user);
     return next();
   })(req, res, next);
 }

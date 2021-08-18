@@ -31,21 +31,23 @@ module.exports = function configPassport(passport) {
         } else {
           json = { ...json, error: "INVALID USERNAME OR PASSWORD" };
         }
-      } catch (err) {
+      } catch (error) {
         json = { ...json, error: "Something went wrong?" };
       } finally {
-        console.log(json);
+        console.log("json:", json);
         // return json;
         if (json.error) {
           return done(json.error);
         }
+        console.log("json.data.uuid:", json.data.uuid);
         const token = jwt.sign(
           { uuid: json.data.uuid },
           process.env.SECRET_KEY,
           {
-            expiresIn: "10 minutes",
+            expiresIn: "10h",
           }
         );
+        console.log("generated token:", token);
         return done(
           null,
           {
@@ -63,8 +65,9 @@ module.exports = function configPassport(passport) {
 
   const cookieJWTExtractor = (req) => {
     let token = null;
-    console.log(req.cookies);
+    console.log("req.cookies:", req.cookies);
     if (req && req.cookies) {
+      console.log("req.cookies[jwt]:", req.cookies["jwt"]);
       token = req.cookies["jwt"];
     }
     return token;
@@ -78,15 +81,16 @@ module.exports = function configPassport(passport) {
   passport.use(
     "jwt",
     new Strategy(jwtOptions, async (payload, done) => {
-      console.log(`payload.uuid: ${payload.uuid}`);
+      console.log("Hitting JWT strat");
+      // console.log(`payload.uuid: ${payload.uuid}`);
       if (!payload || !payload.uuid) {
         return done(true, false, "INVALID CREDENTIALS");
       }
       const user = await User.findOne({ uuid: payload.uuid });
       console.log(`user is: ${user}`);
-      if (err) {
-        return done(true, false, "invalid credentials");
-      }
+      // if (error) {
+      //   return done(true, false, "invalid credentials");
+      // }
       return done(false, user, null);
     })
   );
